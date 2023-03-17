@@ -1,7 +1,7 @@
 # todoapp
 
 A new Flutter project.
-
+Made with the use of Appwrite backend.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
