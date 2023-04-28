@@ -49,6 +49,7 @@ class _LoginViewState extends State<LoginView> {
                   controller: passwordController,
                   hintText: "Password",
                 ),
+                const SizedBox(height: 25),
                 Align(
                   alignment: Alignment.topRight,
                   child: RoundedSmallButton(

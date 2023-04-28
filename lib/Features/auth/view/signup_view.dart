@@ -50,6 +50,7 @@ class _SignUpViewState extends State<SignUpView> {
                   controller: passwordController,
                   hintText: "Password",
                 ),
+                const SizedBox(height: 25),
                 Align(
                   alignment: Alignment.topRight,
                   child: RoundedSmallButton(
