@@ -1,5 +1,5 @@
 # todoapp
-
+<img src = "assets\svgs\todo-list-svgrepo-com.svg">
 A new Flutter project.
 Made with the use of Appwrite backend.
 ## Getting Started
