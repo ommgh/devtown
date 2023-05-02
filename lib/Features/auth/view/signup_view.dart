@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todoapp/Constants/Constants.dart';
+import 'package:todoapp/Features/auth/controller/auth_controller.dart';
 import 'package:todoapp/Features/auth/view/login_view.dart';
 import 'package:todoapp/Features/auth/widgets/auth_field.dart';
 import 'package:todoapp/common/common.dart';
 import 'package:todoapp/theme/pallet.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignUpView extends StatefulWidget {
+class SignUpView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
         builder: (context) => const SignUpView(),
       );
@@ -14,10 +17,10 @@ class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
+  ConsumerState<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
+class _SignUpViewState extends ConsumerState<SignUpView> {
   final appbar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -27,6 +30,14 @@ class _SignUpViewState extends State<SignUpView> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+  }
+
+  void onSignUp() {
+    final res = ref.read(authControllerProvider.notifier).signUp(
+          email: emailController.text,
+          password: passwordController.text,
+          context: context,
+        );
   }
 
   @override
@@ -54,11 +65,22 @@ class _SignUpViewState extends State<SignUpView> {
                 Align(
                   alignment: Alignment.topRight,
                   child: RoundedSmallButton(
-                    onTap: () {},
+                    onTap: onSignUp,
                     label: "SignUp",
                     backgroundColor: Pallete.whiteColor,
                     textColor: Pallete.backgroundColor,
                   ),
+                ),
+                const SizedBox(height: 25),
+                // "Login with Google" button
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    AssetsConstants.googlelogo,
+                    height: 24.0,
+                    width: 24.0,
+                  ),
+                  label: const Text('Login with Google'),
                 ),
                 const SizedBox(height: 25),
                 RichText(
