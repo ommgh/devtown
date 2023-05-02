@@ -77,8 +77,8 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                   onPressed: () {},
                   icon: SvgPicture.asset(
                     AssetsConstants.googlelogo,
-                    height: 24.0,
-                    width: 24.0,
+                    height: 30.0,
+                    width: 30.0,
                   ),
                   label: const Text('Login with Google'),
                 ),
