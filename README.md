@@ -1,5 +1,5 @@
 # Social Media App
-
+<img src ="assets/svgs/twitter.svg" height = "50" width = "50"> 
 Welcome to our Social Media App!
 
 Made With Flutter And FireBase
