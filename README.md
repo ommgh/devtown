@@ -1,17 +1,21 @@
-# To-Do App
-<img src = "assets\svgs\todo-list-svgrepo-com.svg" width = "50"  height = "50">
-A Flutter project.
-Made with the use of Appwrite backend.
+# Social Media App
 
-## Getting Started
+Welcome to our Social Media App!
 
-This project is a starting point for a Flutter application.
+Made With Flutter And FireBase
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Our app has the following features:
+
+Login/Signup:- Users can create a account or login to their existing accounts.
+
+Profile: Create a profile to showcase your interests, hobbies, and personality. Add a profile picture and cover photo to make your profile stand out.
+
+Posts: Share your thoughts, photos, and videos with your followers. You can also see posts from people you follow on your home feed.
+
+Likes and Comments: Like and comment on posts to show your appreciation and engage with others.
+
+Direct Messaging: Send private messages to your friends and followers.
+
+Notifications: Get notifications for new followers, likes, comments, and messages.
