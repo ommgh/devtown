@@ -17,5 +17,3 @@ Posts: Share your thoughts, photos, and videos with your followers. You can also
 Likes and Comments: Like and comment on posts to show your appreciation and engage with others.
 
 Direct Messaging: Send private messages to your friends and followers.
-
-Notifications: Get notifications for new followers, likes, comments, and messages.
