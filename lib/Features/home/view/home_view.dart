@@ -1,14 +1,73 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todoapp/Constants/constants.dart';
+import 'package:todoapp/theme/pallet.dart';
 
-class HomeView extends ConsumerWidget {
+class HomeView extends StatefulWidget {
   static route() => MaterialPageRoute(
         builder: (context) => const HomeView(),
       );
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold();
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  int _page = 0;
+  final appBar = UIConstants.appBar();
+
+  void onPageChange(int index) {
+    setState(() {
+      _page = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar,
+      body: IndexedStack(
+        index: _page,
+        children: UIConstants.bottomTabBarPages,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(
+          Icons.add,
+          color: Pallete.whiteColor,
+          size: 28,
+        ),
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        currentIndex: _page,
+        onTap: onPageChange,
+        backgroundColor: Pallete.backgroundColor,
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              _page == 0
+                  ? AssetsConstants.homeFilled
+                  : AssetsConstants.homeOutlined,
+              color: Pallete.whiteColor,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetsConstants.search,
+              color: Pallete.whiteColor,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetsConstants.notification,
+              color: Pallete.whiteColor,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
