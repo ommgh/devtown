@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todoapp/Features/auth/view/login_view.dart';
+import 'package:todoapp/Features/home/view/home_view.dart';
 import 'package:todoapp/api/auth_api.dart';
 import 'package:todoapp/core/ustils.dart';
 
@@ -30,7 +32,10 @@ class Authcontroller extends StateNotifier<bool> {
     state = false;
     res.fold(
       (l) => showSnackBar(context, l.message),
-      (r) => print(r.email),
+      (r) {
+        showSnackBar(context, "SignUp Sucessful, Please Login");
+        Navigator.push(context, LoginView.route());
+      },
     );
   }
 
@@ -47,7 +52,9 @@ class Authcontroller extends StateNotifier<bool> {
     state = false;
     res.fold(
       (l) => showSnackBar(context, l.message),
-      (r) => print(r.userId),
+      (r) {
+        Navigator.push(context, HomeView.route());
+      },
     );
   }
 }
