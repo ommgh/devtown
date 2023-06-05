@@ -4,6 +4,7 @@ import 'package:todoapp/Features/auth/view/login_view.dart';
 import 'package:todoapp/Features/home/view/home_view.dart';
 import 'package:todoapp/api/auth_api.dart';
 import 'package:todoapp/core/ustils.dart';
+import 'package:appwrite/models.dart' as model;
 
 final authControllerProvider =
     StateNotifierProvider<Authcontroller, bool>((ref) {
@@ -12,12 +13,19 @@ final authControllerProvider =
   );
 });
 
+final currentUserAccountProvider = FutureProvider((ref) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.currentUser();
+});
+
 class Authcontroller extends StateNotifier<bool> {
   final AuthAPI _authAPI;
   Authcontroller({required AuthAPI authAPI})
       : _authAPI = authAPI,
         super(false);
   //Loading(While Saving data to appwrite dashboard)
+
+  Future<model.Account?> currentUser() => _authAPI.currentUserAccount();
 
   void signUp({
     required String email,
