@@ -26,7 +26,7 @@ class UserAPI implements IUserAPI {
       await _db.createDocument(
         databaseId: AppwriteContants.dtatabaseID,
         collectionId: AppwriteContants.userCollection,
-        documentId: userModel.uid,
+        documentId: ID.unique(),
         data: userModel.toMap(),
       );
       return right(null);
