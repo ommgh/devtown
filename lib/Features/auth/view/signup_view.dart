@@ -6,6 +6,7 @@ import 'package:todoapp/Features/auth/controller/auth_controller.dart';
 import 'package:todoapp/Features/auth/view/login_view.dart';
 import 'package:todoapp/Features/auth/widgets/auth_field.dart';
 import 'package:todoapp/common/common.dart';
+import 'package:todoapp/common/loading_page.dart';
 import 'package:todoapp/theme/pallet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,76 +43,79 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(authControllerProvider);
     return Scaffold(
       appBar: appbar,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                //textfield1
-                AuthField(
-                  controller: emailController,
-                  hintText: "E-mail",
-                ),
-                const SizedBox(height: 25),
-                //textfield2
-                AuthField(
-                  controller: passwordController,
-                  hintText: "Password",
-                ),
-                const SizedBox(height: 25),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: RoundedSmallButton(
-                    onTap: onSignUp,
-                    label: "SignUp",
-                    backgroundColor: Pallete.whiteColor,
-                    textColor: Pallete.backgroundColor,
-                  ),
-                ),
-                const SizedBox(height: 25),
-                // "Login with Google" button
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    AssetsConstants.googlelogo,
-                    height: 30.0,
-                    width: 30.0,
-                  ),
-                  label: const Text('Login with Google'),
-                ),
-                const SizedBox(height: 25),
-                RichText(
-                  text: TextSpan(
-                    text: "Already have an account?",
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
+      body: isLoading
+          ? const Loader()
+          : Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
                     children: [
-                      TextSpan(
-                        text: " LogIn",
-                        style: const TextStyle(
-                          color: Pallete.blueColor,
-                          fontSize: 16,
+                      //textfield1
+                      AuthField(
+                        controller: emailController,
+                        hintText: "E-mail",
+                      ),
+                      const SizedBox(height: 25),
+                      //textfield2
+                      AuthField(
+                        controller: passwordController,
+                        hintText: "Password",
+                      ),
+                      const SizedBox(height: 25),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: RoundedSmallButton(
+                          onTap: onSignUp,
+                          label: "SignUp",
+                          backgroundColor: Pallete.whiteColor,
+                          textColor: Pallete.backgroundColor,
                         ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.push(
-                              context,
-                              LoginView.route(),
-                            );
-                          },
+                      ),
+                      const SizedBox(height: 25),
+                      // "Login with Google" button
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(
+                          AssetsConstants.googlelogo,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                        label: const Text('Login with Google'),
+                      ),
+                      const SizedBox(height: 25),
+                      RichText(
+                        text: TextSpan(
+                          text: "Already have an account?",
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: " LogIn",
+                              style: const TextStyle(
+                                color: Pallete.blueColor,
+                                fontSize: 16,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    LoginView.route(),
+                                  );
+                                },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
