@@ -8,7 +8,7 @@ class UIConstants {
     return AppBar(
       title: SvgPicture.asset(
         AssetsConstants.logo,
-        color: Pallete.blueColor,
+        color: Pallete.greencolor,
         height: 30,
       ),
       centerTitle: true,

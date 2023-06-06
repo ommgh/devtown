@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todoapp/Constants/constants.dart';
+import 'package:todoapp/Features/post/views/create_post_view.dart';
 import 'package:todoapp/theme/pallet.dart';
 
 class HomeView extends StatefulWidget {
@@ -25,6 +26,10 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+  onCreatePost() {
+    Navigator.push(context, CreatePost.route());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
         children: UIConstants.bottomTabBarPages,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: onCreatePost,
         child: const Icon(
           Icons.add,
           color: Pallete.whiteColor,
