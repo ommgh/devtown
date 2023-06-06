@@ -40,6 +40,8 @@ dependencies:
   flutter_svg: ^1.1.6
   flutter_riverpod: ^2.3.6
   fpdart: ^0.5.0
+  image_picker: ^0.8.7+5
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
