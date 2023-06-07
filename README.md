@@ -1,5 +1,5 @@
 # Social Media App
-<img src ="assets/svgs/twitter.svg" height = "50" width = "50"> 
+
 Welcome to our Social Media App!
 <br>
 Made With Flutter And Appwrite
@@ -16,4 +16,4 @@ Posts: Share your thoughts, photos, and videos with your followers. You can also
 
 Likes and Comments: Like and comment on posts to show your appreciation and engage with others.
 
-Direct Messaging: Send private messages to your friends and followers.
+
