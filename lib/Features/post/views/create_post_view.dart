@@ -30,6 +30,14 @@ class _CreatePostState extends ConsumerState<CreatePost> {
     postTextController.dispose();
   }
 
+  /*void sharePost() {
+    ref.read(postControllerProvider.notifier).sharePost(
+          images: images,
+          text: postTextController.text,
+          context: context,
+        );
+  }*/
+
   void onPickImages() async {
     images = await pickImages();
     setState(() {});
@@ -38,6 +46,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
   @override
   Widget build(BuildContext context) {
     final currentUser = ref.watch(currentUserDetailsProvider).value;
+    //final isLoading = ref.watch(postContollerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,14 +58,14 @@ class _CreatePostState extends ConsumerState<CreatePost> {
         ),
         actions: [
           RoundedSmallButton(
-            onTap: () {},
+            onTap: /*sharePost*/ () {},
             label: 'Post',
             backgroundColor: Pallete.greencolor,
             textColor: Pallete.whiteColor,
           ),
         ],
       ),
-      body: currentUser == null
+      body: /*isLoading ||*/ currentUser == null
           ? const Loader()
           : SafeArea(
               child: SingleChildScrollView(
