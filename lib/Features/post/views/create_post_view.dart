@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todoapp/Constants/assets_constant.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
+import 'package:todoapp/Features/post/controllers/post_controller.dart';
 import 'package:todoapp/common/common.dart';
-import 'package:todoapp/common/rounded_small_button.dart';
 import 'package:todoapp/core/ustils.dart';
 import 'package:todoapp/theme/pallet.dart';
 import 'dart:io';
@@ -30,13 +30,13 @@ class _CreatePostState extends ConsumerState<CreatePost> {
     postTextController.dispose();
   }
 
-  /*void sharePost() {
+  void sharePost() {
     ref.read(postControllerProvider.notifier).sharePost(
           images: images,
           text: postTextController.text,
           context: context,
         );
-  }*/
+  }
 
   void onPickImages() async {
     images = await pickImages();
@@ -46,7 +46,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
   @override
   Widget build(BuildContext context) {
     final currentUser = ref.watch(currentUserDetailsProvider).value;
-    //final isLoading = ref.watch(postContollerProvider);
+    final isLoading = ref.watch(postControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,14 +58,14 @@ class _CreatePostState extends ConsumerState<CreatePost> {
         ),
         actions: [
           RoundedSmallButton(
-            onTap: /*sharePost*/ () {},
+            onTap: sharePost,
             label: 'Post',
             backgroundColor: Pallete.greencolor,
             textColor: Pallete.whiteColor,
           ),
         ],
       ),
-      body: /*isLoading ||*/ currentUser == null
+      body: isLoading || currentUser == null
           ? const Loader()
           : SafeArea(
               child: SingleChildScrollView(
