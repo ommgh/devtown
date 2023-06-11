@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
+import 'package:todoapp/Features/post/widgets/post_list.dart';
 import 'package:todoapp/api/post_api.dart';
 import 'package:todoapp/api/storage_api.dart';
 import 'package:todoapp/core/enums/post_type.dart';
@@ -20,6 +21,11 @@ final postControllerProvider = StateNotifierProvider<PostController, bool>(
   },
 );
 
+final getPostProvider = FutureProvider((ref) {
+  final postcontroller = ref.watch(postControllerProvider.notifier);
+  return postcontroller.getPosts();
+});
+
 class PostController extends StateNotifier<bool> {
   final PostAPI _postAPI;
   final StorageAPI _storageAPI;
@@ -32,6 +38,11 @@ class PostController extends StateNotifier<bool> {
         _postAPI = postAPI,
         _storageAPI = storageAPI,
         super(false);
+
+  Future<List<Post>> getPosts() async {
+    final postList = await _postAPI.getPosts();
+    return postList.map((post) => Post.fromMap(post.data)).toList();
+  }
 
   void sharePost({
     required List<File> images,

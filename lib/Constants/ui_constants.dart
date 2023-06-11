@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todoapp/Constants/constants.dart';
+import 'package:todoapp/Features/post/widgets/post_list.dart';
 import 'package:todoapp/theme/pallet.dart';
 
 class UIConstants {
@@ -15,8 +16,8 @@ class UIConstants {
     );
   }
 
-  static List<Widget> bottomTabBarPages = [
-    Text("Feed Screen"),
+  static const List<Widget> bottomTabBarPages = [
+    PostList(),
     Text("Search Screen"),
     Text("Notification Screen"),
   ];
