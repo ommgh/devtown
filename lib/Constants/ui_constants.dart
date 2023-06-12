@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todoapp/Constants/constants.dart';
+import 'package:todoapp/constants/constants.dart';
 import 'package:todoapp/Features/post/widgets/post_list.dart';
 import 'package:todoapp/theme/pallet.dart';
 
