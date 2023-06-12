@@ -11,6 +11,7 @@ import '../Constants/Constants.dart';
 
 final postAPIProvider = Provider((ref) {
   return PostAPI(
+    realtime: ref.watch(appwriteRealtimeProvider),
     db: ref.watch(appwriteDatabaseProvider),
   );
 });
@@ -18,11 +19,16 @@ final postAPIProvider = Provider((ref) {
 abstract class IPostAPI {
   FuturEither<Document> sharePost(Post post);
   Future<List<Document>> getPosts();
+  Stream<RealtimeMessage> getLatestPost();
+  FuturEither<Document> likePost(Post post);
 }
 
 class PostAPI implements IPostAPI {
   final Databases _db;
-  PostAPI({required Databases db}) : _db = db;
+  final Realtime _realtime;
+  PostAPI({required Databases db, required Realtime realtime})
+      : _db = db,
+        _realtime = realtime;
 
   @override
   FuturEither<Document> sharePost(Post post) async {
@@ -51,7 +57,42 @@ class PostAPI implements IPostAPI {
     final documents = await _db.listDocuments(
       databaseId: AppwriteContants.databaseID,
       collectionId: AppwriteContants.postCollection,
+      queries: [
+        Query.orderDesc('postedAt'),
+      ], //if index in appwrite db don't workout remove Query
     );
     return documents.documents;
+  }
+
+  @override
+  Stream<RealtimeMessage> getLatestPost() {
+    return _realtime.subscribe([
+      'databases.${AppwriteContants.databaseID}.collections.${AppwriteContants.postCollection}.documents'
+    ]).stream;
+  }
+
+  @override
+  FuturEither<Document> likePost(Post post) async {
+    //liking function needs to be updated
+    try {
+      final document = await _db.updateDocument(
+        databaseId: AppwriteContants.databaseID,
+        collectionId: AppwriteContants.postCollection,
+        documentId: post.id,
+        data: {
+          'likes': post.likes,
+        },
+      );
+      return right(document);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(
+          e.message ?? 'Some unexpected error occurred',
+          st,
+        ),
+      );
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
   }
 }
