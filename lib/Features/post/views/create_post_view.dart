@@ -35,6 +35,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
           images: images,
           text: postTextController.text,
           context: context,
+          repliedTo: '',
         );
     Navigator.pop(context);
   }

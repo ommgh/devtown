@@ -21,6 +21,7 @@ abstract class IPostAPI {
   Future<List<Document>> getPosts();
   Stream<RealtimeMessage> getLatestPost();
   FuturEither<Document> likePost(Post post);
+  Future<List<Document>> getRepliesToPost(Post post);
 }
 
 class PostAPI implements IPostAPI {
@@ -94,5 +95,20 @@ class PostAPI implements IPostAPI {
     } catch (e, st) {
       return left(Failure(e.toString(), st));
     }
+  }
+
+  @override
+  Future<List<Document>> getRepliesToPost(Post post) async {
+    final document = await _db.listDocuments(
+      databaseId: AppwriteContants.databaseID,
+      collectionId: AppwriteContants.postCollection,
+      queries: [
+        Query.equal(
+          'repliedTo',
+          post.id,
+        ),
+      ],
+    );
+    return document.documents;
   }
 }

@@ -27,6 +27,11 @@ final getPostsProvider = FutureProvider((ref) {
   return postcontroller.getPosts();
 });
 
+final getRepliesToPostsProvider = FutureProvider.family((ref, Post post) {
+  final postcontroller = ref.watch(postControllerProvider.notifier);
+  return postcontroller.getRepliesToPost(post);
+});
+
 final getLatestPostProvider = StreamProvider((ref) {
   final postAPI = ref.watch(postAPIProvider);
   return postAPI.getLatestPost();
@@ -68,6 +73,7 @@ class PostController extends StateNotifier<bool> {
     required List<File> images,
     required String text,
     required BuildContext context,
+    required String repliedTo,
   }) {
     if (text.isEmpty) {
       showSnackBar(context, "Please Enter Some Text");
@@ -79,19 +85,27 @@ class PostController extends StateNotifier<bool> {
         images: images,
         text: text,
         context: context,
+        repliedTo: repliedTo,
       );
     } else {
       _shareTextPost(
         text: text,
         context: context,
+        repliedTo: repliedTo,
       );
     }
+  }
+
+  Future<List<Post>> getRepliesToPost(Post post) async {
+    final documents = await _postAPI.getRepliesToPost(post);
+    return documents.map((post) => Post.fromMap(post.data)).toList();
   }
 
   void _shareImagePost({
     required List<File> images,
     required String text,
     required BuildContext context,
+    required String repliedTo,
   }) async {
     state = true;
     final hashtags = _getHastagFromtText(text);
@@ -110,6 +124,7 @@ class PostController extends StateNotifier<bool> {
       commentIds: const [],
       id: '',
       reshareCount: 0,
+      repliedTo: repliedTo,
     );
     final res = await _postAPI.sharePost(post);
     state = false;
@@ -119,6 +134,7 @@ class PostController extends StateNotifier<bool> {
   void _shareTextPost({
     required String text,
     required BuildContext context,
+    required String repliedTo,
   }) async {
     state = true;
     final hashtags = _getHastagFromtText(text);
@@ -136,6 +152,7 @@ class PostController extends StateNotifier<bool> {
       commentIds: const [],
       id: '',
       reshareCount: 0,
+      repliedTo: repliedTo,
     );
     final res = await _postAPI.sharePost(post);
     state = false;
