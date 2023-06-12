@@ -11,6 +11,7 @@ import '../Constants/Constants.dart';
 
 final postAPIProvider = Provider((ref) {
   return PostAPI(
+    realtime: ref.watch(appwriteRealtimeProvider),
     db: ref.watch(appwriteDatabaseProvider),
   );
 });
@@ -18,11 +19,15 @@ final postAPIProvider = Provider((ref) {
 abstract class IPostAPI {
   FuturEither<Document> sharePost(Post post);
   Future<List<Document>> getPosts();
+  Stream<RealtimeMessage> getLatestPost();
 }
 
 class PostAPI implements IPostAPI {
   final Databases _db;
-  PostAPI({required Databases db}) : _db = db;
+  final Realtime _realtime;
+  PostAPI({required Databases db, required Realtime realtime})
+      : _db = db,
+        _realtime = realtime;
 
   @override
   FuturEither<Document> sharePost(Post post) async {
@@ -51,7 +56,17 @@ class PostAPI implements IPostAPI {
     final documents = await _db.listDocuments(
       databaseId: AppwriteContants.databaseID,
       collectionId: AppwriteContants.postCollection,
+      queries: [
+        Query.orderDesc('postedAt'),
+      ], //if index in appwrite db dont workout remove Query
     );
     return documents.documents;
+  }
+
+  @override
+  Stream<RealtimeMessage> getLatestPost() {
+    return _realtime.subscribe([
+      'databases.${AppwriteContants.databaseID}.collections.${AppwriteContants.postCollection}.documents'
+    ]).stream;
   }
 }
