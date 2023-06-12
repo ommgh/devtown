@@ -20,6 +20,7 @@ abstract class IPostAPI {
   FuturEither<Document> sharePost(Post post);
   Future<List<Document>> getPosts();
   Stream<RealtimeMessage> getLatestPost();
+  FuturEither<Document> likePost(Post post);
 }
 
 class PostAPI implements IPostAPI {
@@ -58,7 +59,7 @@ class PostAPI implements IPostAPI {
       collectionId: AppwriteContants.postCollection,
       queries: [
         Query.orderDesc('postedAt'),
-      ], //if index in appwrite db dont workout remove Query
+      ], //if index in appwrite db don't workout remove Query
     );
     return documents.documents;
   }
@@ -68,5 +69,30 @@ class PostAPI implements IPostAPI {
     return _realtime.subscribe([
       'databases.${AppwriteContants.databaseID}.collections.${AppwriteContants.postCollection}.documents'
     ]).stream;
+  }
+
+  @override
+  FuturEither<Document> likePost(Post post) async {
+    //liking function needs to be updated
+    try {
+      final document = await _db.updateDocument(
+        databaseId: AppwriteContants.databaseID,
+        collectionId: AppwriteContants.postCollection,
+        documentId: post.id,
+        data: {
+          'likes': post.likes,
+        },
+      );
+      return right(document);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(
+          e.message ?? 'Some unexpected error occurred',
+          st,
+        ),
+      );
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
   }
 }

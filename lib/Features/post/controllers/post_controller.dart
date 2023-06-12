@@ -10,6 +10,7 @@ import 'package:todoapp/api/storage_api.dart';
 import 'package:todoapp/core/enums/post_type.dart';
 import 'package:todoapp/core/ustils.dart';
 import 'package:todoapp/models/post_model.dart';
+import 'package:todoapp/models/user_model.dart';
 
 final postControllerProvider = StateNotifierProvider<PostController, bool>(
   (ref) {
@@ -47,6 +48,20 @@ class PostController extends StateNotifier<bool> {
   Future<List<Post>> getPosts() async {
     final postList = await _postAPI.getPosts();
     return postList.map((post) => Post.fromMap(post.data)).toList();
+  }
+
+  void likePost(Post post, UserModel user) async {
+    List<String> likes = post.likes;
+
+    if (post.likes.contains(user.uid)) {
+      likes.remove(user.uid);
+    } else {
+      likes.add(user.uid);
+    }
+
+    post = post.copyWith(likes: likes);
+    final res = await _postAPI.likePost(post);
+    res.fold((l) => null, (r) => null);
   }
 
   void sharePost({
