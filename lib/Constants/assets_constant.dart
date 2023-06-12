@@ -8,4 +8,7 @@ class AssetsConstants {
   static const String notification = "$_svgPath/notification_outlined.svg";
   static const String galery = "$_svgPath/gallery.svg";
   static const String gif = "$_svgPath/gif.svg";
+  static const String viewicon = "$_svgPath/views.svg";
+  static const String commenticon = "$_svgPath/comment.svg";
+  static const String likeoutlinedicon = "$_svgPath/like_outlined.svg";
 }

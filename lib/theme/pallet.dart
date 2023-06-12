@@ -7,4 +7,5 @@ class Pallete {
   static const Color greencolor = Color.fromARGB(255, 120, 191, 59);
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Colors.grey;
+  static const Color blueColor = Color.fromARGB(255, 56, 117, 221);
 }
