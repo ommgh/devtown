@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todoapp/Constants/assets_constant.dart';
+import 'package:todoapp/constants/assets_constant.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
 import 'package:todoapp/Features/post/controllers/post_controller.dart';
 import 'package:todoapp/common/common.dart';

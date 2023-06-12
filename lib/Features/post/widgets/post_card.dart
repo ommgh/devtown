@@ -1,7 +1,7 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todoapp/Constants/assets_constant.dart';
+import 'package:todoapp/constants/assets_constant.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
 import 'package:todoapp/Features/post/widgets/carousel_image.dart';
 import 'package:todoapp/Features/post/widgets/hashtag_text.dart';

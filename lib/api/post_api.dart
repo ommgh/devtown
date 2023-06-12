@@ -2,10 +2,12 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:todoapp/constants/appwrite_dependency.dart';
+
 import 'package:todoapp/core/core.dart';
 import 'package:todoapp/core/providers.dart';
 import 'package:todoapp/models/post_model.dart';
+
+import '../Constants/Constants.dart';
 
 final postAPIProvider = Provider((ref) {
   return PostAPI(
@@ -26,7 +28,7 @@ class PostAPI implements IPostAPI {
   FuturEither<Document> sharePost(Post post) async {
     try {
       final document = await _db.createDocument(
-        databaseId: AppwriteContants.dtatabaseID,
+        databaseId: AppwriteContants.databaseID,
         collectionId: AppwriteContants.postCollection,
         documentId: ID.unique(),
         data: post.toMap(),
@@ -47,7 +49,7 @@ class PostAPI implements IPostAPI {
   @override
   Future<List<Document>> getPosts() async {
     final documents = await _db.listDocuments(
-      databaseId: AppwriteContants.dtatabaseID,
+      databaseId: AppwriteContants.databaseID,
       collectionId: AppwriteContants.postCollection,
     );
     return documents.documents;

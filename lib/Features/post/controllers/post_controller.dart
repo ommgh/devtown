@@ -21,7 +21,7 @@ final postControllerProvider = StateNotifierProvider<PostController, bool>(
   },
 );
 
-final getPostProvider = FutureProvider((ref) {
+final getPostsProvider = FutureProvider((ref) {
   final postcontroller = ref.watch(postControllerProvider.notifier);
   return postcontroller.getPosts();
 });

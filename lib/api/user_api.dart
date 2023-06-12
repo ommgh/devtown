@@ -2,7 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as model;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:todoapp/Constants/appwrite_dependency.dart';
+import 'package:todoapp/constants/appwrite_dependency.dart';
 import 'package:todoapp/core/core.dart';
 import 'package:todoapp/core/providers.dart';
 import 'package:todoapp/models/user_model.dart';
@@ -26,7 +26,7 @@ class UserAPI implements IUserAPI {
   FuturEitherVoid saveUserData(UserModel userModel) async {
     try {
       await _db.createDocument(
-        databaseId: AppwriteContants.dtatabaseID,
+        databaseId: AppwriteContants.databaseID,
         collectionId: AppwriteContants.userCollection,
         documentId: userModel.uid,
         data: userModel.toMap(),
@@ -47,7 +47,7 @@ class UserAPI implements IUserAPI {
   @override
   Future<model.Document> getUserData(String uid) {
     return _db.getDocument(
-      databaseId: AppwriteContants.dtatabaseID,
+      databaseId: AppwriteContants.databaseID,
       collectionId: AppwriteContants.userCollection,
       documentId: uid,
     );

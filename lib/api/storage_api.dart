@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todoapp/Constants/appwrite_dependency.dart';
+import 'package:todoapp/constants/appwrite_dependency.dart';
 import 'package:todoapp/core/providers.dart';
 
 final storageAPIProvider = Provider((ref) {
