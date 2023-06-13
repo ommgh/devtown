@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
+import 'package:todoapp/Features/post/controllers/post_controller.dart';
+import 'package:todoapp/Features/post/widgets/post_card.dart';
+import 'package:todoapp/Features/user_profile/controller/user_profile_controller.dart';
 import 'package:todoapp/Features/user_profile/widgets/follow_count.dart';
 import 'package:todoapp/common/common.dart';
+import 'package:todoapp/constants/constants.dart';
+import 'package:todoapp/models/post_model.dart';
 import 'package:todoapp/models/user_model.dart';
 import 'package:todoapp/theme/pallet.dart';
 
@@ -95,12 +100,12 @@ class UserProfile extends ConsumerWidget {
                         Row(
                           children: [
                             FollowCount(
-                              count: user.following.length - 1,
+                              count: user.following.length,
                               text: 'Following',
                             ),
                             const SizedBox(width: 15),
                             FollowCount(
-                              count: user.followers.length - 1,
+                              count: user.followers.length,
                               text: 'Followers',
                             ),
                           ],
@@ -113,7 +118,22 @@ class UserProfile extends ConsumerWidget {
                 ),
               ];
             },
-            body: Container(),
+            body: ref.watch(getUserPostsProvider(user.uid)).when(
+                  data: (posts) {
+                    //can be made realtime using post_reply_view logic
+                    return ListView.builder(
+                      itemCount: posts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final post = posts[index];
+                        return PostCard(post: post);
+                      },
+                    );
+                  },
+                  error: (error, st) => ErrorText(
+                    error: error.toString(),
+                  ),
+                  loading: () => const Loader(),
+                ),
           );
   }
 }
