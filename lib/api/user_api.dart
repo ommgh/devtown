@@ -17,6 +17,7 @@ abstract class IUserAPI {
   FuturEitherVoid saveUserData(UserModel userModel);
   Future<model.Document> getUserData(String uid);
   Future<List<model.Document>> searchUserByName(String name);
+  FuturEitherVoid updateUserData(UserModel userModel);
 }
 
 class UserAPI implements IUserAPI {
@@ -65,5 +66,27 @@ class UserAPI implements IUserAPI {
     );
 
     return documents.documents;
+  }
+
+  @override
+  FuturEitherVoid updateUserData(UserModel userModel) async {
+    try {
+      await _db.updateDocument(
+        databaseId: AppwriteContants.databaseID,
+        collectionId: AppwriteContants.userCollection,
+        documentId: userModel.uid,
+        data: userModel.toMap(),
+      );
+      return right(null);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(
+          e.message ?? 'Some Unexpected Error Occured',
+          st,
+        ),
+      );
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
   }
 }
