@@ -51,10 +51,11 @@ flutter run
 ## License
 This project is licensed under the MIT License.
 
-## Acknowledgements
+## Tech Stack
 
 - Flutter: https://flutter.dev/
 - Appwrite: https://appwrite.io/
+- Riverpod: https://riverpod.dev/
 
 ## Contact 
 
