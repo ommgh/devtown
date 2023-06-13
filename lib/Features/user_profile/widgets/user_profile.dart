@@ -100,12 +100,12 @@ class UserProfile extends ConsumerWidget {
                         Row(
                           children: [
                             FollowCount(
-                              count: user.following.length - 1,
+                              count: user.following.length,
                               text: 'Following',
                             ),
                             const SizedBox(width: 15),
                             FollowCount(
-                              count: user.followers.length - 1,
+                              count: user.followers.length,
                               text: 'Followers',
                             ),
                           ],
