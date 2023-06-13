@@ -15,12 +15,12 @@ Follow these steps to set up the project locally:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/IamOm775/site-sense
+git clone https://github.com/IamOm775/social-media-app
 ```
 2. Navigate to the project directory:
 
 ```bash
-cd site-sense
+cd social-media-app
 ```
 3. Install the project dependencies:
 ```bash
