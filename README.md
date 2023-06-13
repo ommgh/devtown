@@ -1,19 +1,67 @@
 # Social Media App
 
-Welcome to our Social Media App!
-<br>
-Made With Flutter And Appwrite
+## Prerequisites
+
+Before setting up the project locally, ensure that you have the following installed:
+
+- Flutter SDK: [Install Flutter](https://flutter.dev/docs/get-started/install)
+- Dart: [Install Dart](https://dart.dev/get-dart)
+- Appwrite server: [Install Appwrite](https://appwrite.io/docs/installation)
+
+## Setup
+
+Follow these steps to set up the project locally:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/IamOm775/site-sense
+```
+2. Navigate to the project directory:
+
+```bash
+cd site-sense
+```
+3. Install the project dependencies:
+```bash
+flutter pub get
+```
+4. Create your Appwrite Cloud account from https://appwrite.io/
+
+5. Configure the Appwrite SDK in the Flutter project:
+
+- Open the lib/constants/appwrite_dependency.dart file.
+- Enter the required IDs for the placeholders.
+```dart
+class AppwriteContants {
+  static const String databaseID = " ";
+  static const String projectID = " ";
+  static const String endPoint = "https://cloud.appwrite.io/v1";
+  static const String userCollection = " ";
+  static const String postCollection = " ";
+  static const String imagesBucket = " ";
+  static String imageurl(String imageId) =>
+      "$endPoint/storage/buckets/$imagesBucket/files/$imageId/view?project=$projectID&mode=admin";
+}
+```
+6. Run the app on your preferred device or emulator:
+```bash
+flutter run
+```
+## License
+This project is licensed under the MIT License.
+
+## Acknowledgements
+
+- Flutter: https://flutter.dev/
+- Appwrite: https://appwrite.io/
+
+## Contact 
+
+If you have any questions or suggestions, feel free to reach out to me at:-
+om.works01@gmail.com .
 
 
 
-Our app has the following features:
-
-Login/Signup:- Users can create a account or login to their existing accounts.
-
-Profile: Create a profile to showcase your interests, hobbies, and personality. Add a profile picture and cover photo to make your profile stand out.
-
-Posts: Share your thoughts, photos, and videos with your followers. You can also see posts from people you follow on your home feed.
-
-Likes and Comments: Like and comment on posts to show your appreciation and engage with others.
 
 
