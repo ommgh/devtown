@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
+import 'package:todoapp/Features/user_profile/controller/user_profile_controller.dart';
 import 'package:todoapp/common/common.dart';
 import 'package:todoapp/core/ustils.dart';
 import 'package:todoapp/theme/theme.dart';
@@ -18,10 +19,21 @@ class EditProfileView extends ConsumerStatefulWidget {
 }
 
 class _EditProfileViewState extends ConsumerState<EditProfileView> {
-  final nameController = TextEditingController();
-  final bioController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController bioController;
   File? bannerFile;
   File? profileFile;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(
+      text: ref.read(currentUserDetailsProvider).value?.name ?? '',
+    );
+    bioController = TextEditingController(
+      text: ref.read(currentUserDetailsProvider).value?.bio ?? '',
+    );
+  }
 
   @override
   void dispose() {
@@ -51,18 +63,31 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(currentUserDetailsProvider).value;
+    final isLoading = ref.watch(userProfileControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
         centerTitle: false,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              ref
+                  .read(userProfileControllerProvider.notifier)
+                  .updateUserProfile(
+                    userModel: user!.copyWith(
+                      bio: bioController.text,
+                      name: nameController.text,
+                    ),
+                    context: context,
+                    bannerFile: bannerFile,
+                    profileFile: profileFile,
+                  );
+            },
             child: const Text('Save'),
           ),
         ],
       ),
-      body: user == null
+      body: isLoading || user == null
           ? const Loader()
           : Column(
               children: [
