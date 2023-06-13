@@ -79,7 +79,45 @@ class PostCard extends ConsumerWidget {
                                   ],
                                 ),
 
-                                //repliedto
+                                if (post.repliedTo.isNotEmpty)
+                                  ref
+                                      .watch(
+                                          getPostByIdProvider(post.repliedTo))
+                                      .when(
+                                        data: (repliedToPost) {
+                                          final replyingToUser = ref
+                                              .watch(
+                                                userDetailsProvider(
+                                                    repliedToPost.uid),
+                                              )
+                                              .value;
+
+                                          return RichText(
+                                            text: TextSpan(
+                                              text: "Replying To",
+                                              style: const TextStyle(
+                                                color: Pallete.greyColor,
+                                                fontSize: 16,
+                                              ),
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      " @${replyingToUser?.name}",
+                                                  style: const TextStyle(
+                                                    color: Pallete.blueColor,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                        error: (error, st) => ErrorText(
+                                          error: error.toString(),
+                                        ),
+                                        loading: () => const SizedBox(),
+                                      ),
+
                                 HashtagText(text: post.text),
                                 if (post.postType == PostType.image)
                                   CarouselImage(imageLinks: post.imageLinks),

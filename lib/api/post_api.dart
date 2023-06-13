@@ -22,6 +22,7 @@ abstract class IPostAPI {
   Stream<RealtimeMessage> getLatestPost();
   FuturEither<Document> likePost(Post post);
   Future<List<Document>> getRepliesToPost(Post post);
+  Future<Document> getPostById(String id);
 }
 
 class PostAPI implements IPostAPI {
@@ -110,5 +111,14 @@ class PostAPI implements IPostAPI {
       ],
     );
     return document.documents;
+  }
+
+  @override
+  Future<Document> getPostById(String id) async {
+    return _db.getDocument(
+      databaseId: AppwriteContants.databaseID,
+      collectionId: AppwriteContants.postCollection,
+      documentId: id,
+    );
   }
 }

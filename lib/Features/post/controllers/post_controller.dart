@@ -37,6 +37,11 @@ final getLatestPostProvider = StreamProvider((ref) {
   return postAPI.getLatestPost();
 });
 
+final getPostByIdProvider = FutureProvider.family((ref, String id) async {
+  final postcontroller = ref.watch(postControllerProvider.notifier);
+  return postcontroller.getPostById(id);
+});
+
 class PostController extends StateNotifier<bool> {
   final PostAPI _postAPI;
   final StorageAPI _storageAPI;
@@ -53,6 +58,11 @@ class PostController extends StateNotifier<bool> {
   Future<List<Post>> getPosts() async {
     final postList = await _postAPI.getPosts();
     return postList.map((post) => Post.fromMap(post.data)).toList();
+  }
+
+  Future<Post> getPostById(String id) async {
+    final post = await _postAPI.getPostById(id);
+    return Post.fromMap(post.data);
   }
 
   void likePost(Post post, UserModel user) async {
