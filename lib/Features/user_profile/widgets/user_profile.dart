@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
-import 'package:todoapp/Features/post/controllers/post_controller.dart';
 import 'package:todoapp/Features/post/widgets/post_card.dart';
 import 'package:todoapp/Features/user_profile/controller/user_profile_controller.dart';
+import 'package:todoapp/Features/user_profile/views/edit_profile_view.dart';
 import 'package:todoapp/Features/user_profile/widgets/follow_count.dart';
 import 'package:todoapp/common/common.dart';
-import 'package:todoapp/constants/constants.dart';
-import 'package:todoapp/models/post_model.dart';
 import 'package:todoapp/models/user_model.dart';
 import 'package:todoapp/theme/pallet.dart';
 
@@ -48,7 +46,11 @@ class UserProfile extends ConsumerWidget {
                         alignment: Alignment.bottomRight,
                         margin: const EdgeInsets.all(20),
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (currentUser.uid == user.uid) {
+                              Navigator.push(context, EditProfileView.route());
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
