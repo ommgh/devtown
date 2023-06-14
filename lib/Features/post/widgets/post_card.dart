@@ -171,7 +171,12 @@ class PostCard extends ConsumerWidget {
                                       PostIconButton(
                                         pathName: AssetsConstants.commenticon,
                                         text: post.commentIds.length.toString(),
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            PostReplyScreen.route(post),
+                                          );
+                                        },
                                       ),
                                       LikeButton(
                                         size: 25,
