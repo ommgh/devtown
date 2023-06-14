@@ -48,7 +48,7 @@ class PostCard extends ConsumerWidget {
                             margin: const EdgeInsets.all(10),
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.pop(
+                                Navigator.push(
                                   context,
                                   UserProfileView.route(user),
                                 );
@@ -146,9 +146,10 @@ class PostCard extends ConsumerWidget {
                                 if (post.link.isNotEmpty) ...[
                                   const SizedBox(height: 4),
                                   AnyLinkPreview(
-                                      displayDirection:
-                                          UIDirection.uiDirectionHorizontal,
-                                      link: 'https://${post.link}'),
+                                    displayDirection:
+                                        UIDirection.uiDirectionHorizontal,
+                                    link: 'https://${post.link}',
+                                  ),
                                 ],
                                 Container(
                                   margin: const EdgeInsets.only(
@@ -170,7 +171,12 @@ class PostCard extends ConsumerWidget {
                                       PostIconButton(
                                         pathName: AssetsConstants.commenticon,
                                         text: post.commentIds.length.toString(),
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            PostReplyScreen.route(post),
+                                          );
+                                        },
                                       ),
                                       LikeButton(
                                         size: 25,
