@@ -45,6 +45,7 @@ dependencies:
   timeago: ^3.4.0
   any_link_preview: ^3.0.0
   like_button: ^2.0.5
+  google_fonts: ^4.0.4
 
 dev_dependencies:
   flutter_test:

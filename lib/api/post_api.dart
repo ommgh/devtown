@@ -142,7 +142,7 @@ class PostAPI implements IPostAPI {
       databaseId: AppwriteContants.databaseID,
       collectionId: AppwriteContants.postCollection,
       queries: [
-        Query.search('hastags', hashtag),
+        Query.search('hashtags', hashtag),
       ],
     );
     return documents.documents;

@@ -88,7 +88,9 @@ class AuthAPI implements IAuthAPI {
   @override
   FuturEitherVoid logout() async {
     try {
-      await _account.deleteSession(sessionId: 'current');
+      await _account.deleteSession(
+        sessionId: 'current',
+      );
       return right(null);
     } on AppwriteException catch (e, stackTrace) {
       return left(
