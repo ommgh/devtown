@@ -48,7 +48,7 @@ class SideDrawer extends ConsumerWidget {
                 size: 30,
               ),
               title: const Text(
-                'Twitter Blue',
+                'Dev Green',
                 style: TextStyle(
                   fontSize: 22,
                 ),
