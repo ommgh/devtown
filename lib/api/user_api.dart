@@ -20,6 +20,8 @@ abstract class IUserAPI {
   Future<List<model.Document>> searchUserByName(String name);
   FuturEitherVoid updateUserData(UserModel userModel);
   Stream<RealtimeMessage> getLatestUserProfileData();
+  FuturEitherVoid followUser(UserModel user);
+  FuturEitherVoid addToFollowing(UserModel user);
 }
 
 class UserAPI implements IUserAPI {
@@ -102,5 +104,53 @@ class UserAPI implements IUserAPI {
     return _realtime.subscribe([
       'databases.${AppwriteContants.databaseID}.collections.${AppwriteContants.userCollection}.documents'
     ]).stream;
+  }
+
+  @override
+  FuturEitherVoid followUser(UserModel user) async {
+    try {
+      await _db.updateDocument(
+        databaseId: AppwriteContants.databaseID,
+        collectionId: AppwriteContants.userCollection,
+        documentId: user.uid,
+        data: {
+          'followers': user.followers,
+        },
+      );
+      return right(null);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(
+          e.message ?? 'Some Unexpected Error Occured',
+          st,
+        ),
+      );
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
+  }
+
+  @override
+  FuturEitherVoid addToFollowing(UserModel user) async {
+    try {
+      await _db.updateDocument(
+        databaseId: AppwriteContants.databaseID,
+        collectionId: AppwriteContants.userCollection,
+        documentId: user.uid,
+        data: {
+          'following': user.following,
+        },
+      );
+      return right(null);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(
+          e.message ?? 'Some Unexpected Error Occured',
+          st,
+        ),
+      );
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
   }
 }

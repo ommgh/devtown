@@ -18,14 +18,14 @@ final userProfileControllerProvider =
 });
 
 final getUserPostsProvider = FutureProvider.family((ref, String uid) async {
-  final UserProfileController =
+  final userProfileController =
       ref.watch(userProfileControllerProvider.notifier);
-  return UserProfileController.getUserPosts(uid);
+  return userProfileController.getUserPosts(uid);
 });
 
 final getLatestUserProfileDataProvider = StreamProvider((ref) {
-  final UserAPI = ref.watch(userAPIProvider);
-  return UserAPI.getLatestUserProfileData();
+  final userAPI = ref.watch(userAPIProvider);
+  return userAPI.getLatestUserProfileData();
 });
 
 class UserProfileController extends StateNotifier<bool> {
@@ -74,5 +74,29 @@ class UserProfileController extends StateNotifier<bool> {
       (l) => showSnackBar(context, l.message),
       (r) => Navigator.pop(context),
     );
+  }
+
+  void followUser({
+    required UserModel user,
+    required BuildContext context,
+    required UserModel currentUser,
+  }) async {
+    if (currentUser.following.contains(user.uid)) {
+      user.followers.remove(currentUser.uid);
+      currentUser.following.remove(user.uid);
+    } else {
+      user.followers.add(currentUser.uid);
+      currentUser.following.add(user.uid);
+    }
+    user = user.copyWith(followers: user.followers);
+    currentUser = currentUser.copyWith(
+      following: currentUser.following,
+    );
+
+    final res = await _userAPI.followUser(user);
+    res.fold((l) => showSnackBar(context, l.message), (r) async {
+      final res2 = await _userAPI.addToFollowing(currentUser);
+      res2.fold((l) => showSnackBar(context, l.message), (r) => null);
+    });
   }
 }
