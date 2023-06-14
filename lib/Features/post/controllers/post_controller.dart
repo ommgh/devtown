@@ -47,6 +47,11 @@ final getPostByIdProvider = FutureProvider.family((ref, String id) async {
   return postcontroller.getPostById(id);
 });
 
+final getPostsByHashtagProvider = FutureProvider.family((ref, String hashtag) {
+  final postcontroller = ref.watch(postControllerProvider.notifier);
+  return postcontroller.getPostsByHashtags(hashtag);
+});
+
 class PostController extends StateNotifier<bool> {
   final PostAPI _postAPI;
   final StorageAPI _storageAPI;
@@ -126,6 +131,11 @@ class PostController extends StateNotifier<bool> {
 
   Future<List<Post>> getRepliesToPost(Post post) async {
     final documents = await _postAPI.getRepliesToPost(post);
+    return documents.map((post) => Post.fromMap(post.data)).toList();
+  }
+
+  Future<List<Post>> getPostsByHashtags(String hashtag) async {
+    final documents = await _postAPI.getPostsByHashtags(hashtag);
     return documents.map((post) => Post.fromMap(post.data)).toList();
   }
 

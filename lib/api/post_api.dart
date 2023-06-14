@@ -24,6 +24,7 @@ abstract class IPostAPI {
   Future<List<Document>> getRepliesToPost(Post post);
   Future<Document> getPostById(String id);
   Future<List<Document>> getUserPosts(String uid);
+  Future<List<Document>> getPostsByHashtags(String hashtag);
 }
 
 class PostAPI implements IPostAPI {
@@ -130,6 +131,18 @@ class PostAPI implements IPostAPI {
       collectionId: AppwriteContants.postCollection,
       queries: [
         Query.equal('uid', uid),
+      ],
+    );
+    return documents.documents;
+  }
+
+  @override
+  Future<List<Document>> getPostsByHashtags(String hashtag) async {
+    final documents = await _db.listDocuments(
+      databaseId: AppwriteContants.databaseID,
+      collectionId: AppwriteContants.postCollection,
+      queries: [
+        Query.search('hastags', hashtag),
       ],
     );
     return documents.documents;
