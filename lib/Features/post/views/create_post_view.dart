@@ -36,6 +36,7 @@ class _CreatePostState extends ConsumerState<CreatePost> {
           text: postTextController.text,
           context: context,
           repliedTo: '',
+          repliedToUserId: '',
         );
     Navigator.pop(context);
   }

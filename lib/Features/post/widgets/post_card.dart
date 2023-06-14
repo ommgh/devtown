@@ -165,7 +165,10 @@ class PostCard extends ConsumerWidget {
                                           ref
                                               .read(postControllerProvider
                                                   .notifier)
-                                              .likePost(post, currentUser);
+                                              .likePost(
+                                                post,
+                                                currentUser,
+                                              );
                                           return !isLiked;
                                         },
                                         isLiked: post.likes

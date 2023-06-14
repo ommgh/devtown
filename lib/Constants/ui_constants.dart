@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todoapp/Features/explore/views/explore_view.dart';
+import 'package:todoapp/Features/notifications/views/notification_view.dart';
 import 'package:todoapp/constants/constants.dart';
 import 'package:todoapp/Features/post/widgets/post_list.dart';
 import 'package:todoapp/theme/pallet.dart';
@@ -20,6 +21,6 @@ class UIConstants {
   static const List<Widget> bottomTabBarPages = [
     PostList(),
     ExploreView(),
-    Text("Notification Screen"),
+    NotificationView(),
   ];
 }

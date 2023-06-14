@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
+import 'package:todoapp/Features/notifications/controller/notification_controller.dart';
 import 'package:todoapp/Features/post/widgets/post_list.dart';
+import 'package:todoapp/api/notification_api.dart';
 import 'package:todoapp/api/post_api.dart';
 import 'package:todoapp/api/storage_api.dart';
+import 'package:todoapp/core/enums/notification_type_enum.dart';
 import 'package:todoapp/core/enums/post_type.dart';
 import 'package:todoapp/core/ustils.dart';
 import 'package:todoapp/models/post_model.dart';
@@ -18,6 +21,8 @@ final postControllerProvider = StateNotifierProvider<PostController, bool>(
       ref: ref,
       postAPI: ref.watch(postAPIProvider),
       storageAPI: ref.watch(storageAPIProvider),
+      notificationController:
+          ref.watch(notificationControllerProvider.notifier),
     );
   },
 );
@@ -45,14 +50,17 @@ final getPostByIdProvider = FutureProvider.family((ref, String id) async {
 class PostController extends StateNotifier<bool> {
   final PostAPI _postAPI;
   final StorageAPI _storageAPI;
+  final NotificationController _notificationController;
   final Ref _ref;
   PostController({
     required Ref ref,
     required PostAPI postAPI,
     required StorageAPI storageAPI,
+    required NotificationController notificationController,
   })  : _ref = ref,
         _postAPI = postAPI,
         _storageAPI = storageAPI,
+        _notificationController = notificationController,
         super(false);
 
   Future<List<Post>> getPosts() async {
@@ -76,7 +84,14 @@ class PostController extends StateNotifier<bool> {
 
     post = post.copyWith(likes: likes);
     final res = await _postAPI.likePost(post);
-    res.fold((l) => null, (r) => null);
+    res.fold((l) => null, (r) {
+      _notificationController.createNotification(
+        text: '${user.name} liked your tweet',
+        postId: post.id,
+        notificationType: NotificationType.like,
+        uid: post.uid,
+      );
+    });
   }
 
   void sharePost({
@@ -84,6 +99,7 @@ class PostController extends StateNotifier<bool> {
     required String text,
     required BuildContext context,
     required String repliedTo,
+    required String repliedToUserId,
   }) {
     if (text.isEmpty) {
       showSnackBar(context, "Please Enter Some Text");
@@ -96,12 +112,14 @@ class PostController extends StateNotifier<bool> {
         text: text,
         context: context,
         repliedTo: repliedTo,
+        repliedToUserId: repliedToUserId,
       );
     } else {
       _shareTextPost(
         text: text,
         context: context,
         repliedTo: repliedTo,
+        repliedToUserId: repliedToUserId,
       );
     }
   }
@@ -116,6 +134,7 @@ class PostController extends StateNotifier<bool> {
     required String text,
     required BuildContext context,
     required String repliedTo,
+    required String repliedToUserId,
   }) async {
     state = true;
     final hashtags = _getHastagFromtText(text);
@@ -137,14 +156,25 @@ class PostController extends StateNotifier<bool> {
       repliedTo: repliedTo,
     );
     final res = await _postAPI.sharePost(post);
+
+    res.fold((l) => showSnackBar(context, l.message), (r) {
+      if (repliedToUserId.isNotEmpty) {
+        _notificationController.createNotification(
+          text: '${user.name} replied to your post',
+          postId: r.$id,
+          notificationType: NotificationType.reply,
+          uid: repliedToUserId,
+        );
+      }
+    });
     state = false;
-    res.fold((l) => showSnackBar(context, l.message), (r) => null);
   }
 
   void _shareTextPost({
     required String text,
     required BuildContext context,
     required String repliedTo,
+    required String repliedToUserId,
   }) async {
     state = true;
     final hashtags = _getHastagFromtText(text);
@@ -165,8 +195,18 @@ class PostController extends StateNotifier<bool> {
       repliedTo: repliedTo,
     );
     final res = await _postAPI.sharePost(post);
+
+    res.fold((l) => showSnackBar(context, l.message), (r) {
+      if (repliedToUserId.isNotEmpty) {
+        _notificationController.createNotification(
+          text: '${user.name} replied to your post',
+          postId: r.$id,
+          notificationType: NotificationType.reply,
+          uid: repliedToUserId,
+        );
+      }
+    });
     state = false;
-    res.fold((l) => showSnackBar(context, l.message), (r) => null);
   }
 
   String _getLinkFromText(String text) {

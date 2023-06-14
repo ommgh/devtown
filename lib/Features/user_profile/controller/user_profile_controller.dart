@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todoapp/Features/notifications/controller/notification_controller.dart';
 import 'package:todoapp/api/post_api.dart';
 import 'package:todoapp/api/storage_api.dart';
 import 'package:todoapp/api/user_api.dart';
+import 'package:todoapp/core/enums/notification_type_enum.dart';
 import 'package:todoapp/core/ustils.dart';
 import 'package:todoapp/models/post_model.dart';
 import 'package:todoapp/models/user_model.dart';
@@ -14,6 +16,7 @@ final userProfileControllerProvider =
     postAPI: ref.watch(postAPIProvider),
     storageAPI: ref.watch(storageAPIProvider),
     userAPI: ref.watch(userAPIProvider),
+    notificationController: ref.watch(notificationControllerProvider.notifier),
   );
 });
 
@@ -32,14 +35,17 @@ class UserProfileController extends StateNotifier<bool> {
   final PostAPI _postAPI;
   final StorageAPI _storageAPI;
   final UserAPI _userAPI;
+  final NotificationController _notificationController;
 
   UserProfileController({
     required PostAPI postAPI,
     required StorageAPI storageAPI,
     required UserAPI userAPI,
+    required NotificationController notificationController,
   })  : _postAPI = postAPI,
         _storageAPI = storageAPI,
         _userAPI = userAPI,
+        _notificationController = notificationController,
         super(false);
 
   Future<List<Post>> getUserPosts(String uid) async {
@@ -96,7 +102,14 @@ class UserProfileController extends StateNotifier<bool> {
     final res = await _userAPI.followUser(user);
     res.fold((l) => showSnackBar(context, l.message), (r) async {
       final res2 = await _userAPI.addToFollowing(currentUser);
-      res2.fold((l) => showSnackBar(context, l.message), (r) => null);
+      res2.fold((l) => showSnackBar(context, l.message), (r) {
+        _notificationController.createNotification(
+          text: '${currentUser.name} followed you',
+          postId: '',
+          notificationType: NotificationType.follow,
+          uid: user.uid,
+        );
+      });
     });
   }
 }
