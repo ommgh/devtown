@@ -23,6 +23,11 @@ final getUserPostsProvider = FutureProvider.family((ref, String uid) async {
   return UserProfileController.getUserPosts(uid);
 });
 
+final getLatestUserProfileDataProvider = StreamProvider((ref) {
+  final UserAPI = ref.watch(userAPIProvider);
+  return UserAPI.getLatestUserProfileData();
+});
+
 class UserProfileController extends StateNotifier<bool> {
   final PostAPI _postAPI;
   final StorageAPI _storageAPI;
