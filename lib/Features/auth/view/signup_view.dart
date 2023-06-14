@@ -75,17 +75,7 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                           textColor: Pallete.backgroundColor,
                         ),
                       ),
-                      const SizedBox(height: 25),
-                      // "Login with Google" button
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: SvgPicture.asset(
-                          AssetsConstants.googlelogo,
-                          height: 30.0,
-                          width: 30.0,
-                        ),
-                        label: const Text('Login with Google'),
-                      ),
+
                       const SizedBox(height: 25),
                       RichText(
                         text: TextSpan(
