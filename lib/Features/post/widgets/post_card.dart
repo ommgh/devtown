@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:like_button/like_button.dart';
+import 'package:todoapp/Constants/assets_constant.dart';
 import 'package:todoapp/Features/post/controllers/post_controller.dart';
 import 'package:todoapp/Features/post/views/post_reply_view.dart';
 import 'package:todoapp/Features/user_profile/views/user_profile_view.dart';
-import 'package:todoapp/constants/assets_constant.dart';
+
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
 import 'package:todoapp/Features/post/widgets/carousel_image.dart';
 import 'package:todoapp/Features/post/widgets/hashtag_text.dart';
@@ -66,7 +67,11 @@ class PostCard extends ConsumerWidget {
                                 Row(
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(right: 5),
+                                      margin: EdgeInsets.only(
+                                        right: user.isTwitterBlue
+                                            ? 1
+                                            : 5, //Space For Verified Batch
+                                      ),
                                       child: Text(
                                         user.name,
                                         style: const TextStyle(
@@ -75,6 +80,14 @@ class PostCard extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
+                                    if (user.isTwitterBlue)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 5.0),
+                                        child: SvgPicture.asset(
+                                          AssetsConstants.verifiedbadge,
+                                        ),
+                                      ),
                                     Text(
                                       '@${user.name} . ${timeago.format(
                                         post.postedAt,

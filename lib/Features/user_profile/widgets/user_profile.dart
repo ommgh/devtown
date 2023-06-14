@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todoapp/Constants/assets_constant.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
 import 'package:todoapp/Features/post/widgets/post_card.dart';
 import 'package:todoapp/Features/user_profile/controller/user_profile_controller.dart';
@@ -91,12 +93,23 @@ class UserProfile extends ConsumerWidget {
                   sliver: SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Text(
-                          user.name,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              user.name,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            if (user.isTwitterBlue)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5.0),
+                                child: SvgPicture.asset(
+                                  AssetsConstants.verifiedbadge,
+                                ),
+                              ),
+                          ],
                         ),
                         Text(
                           '@${user.name}',

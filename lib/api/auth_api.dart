@@ -22,6 +22,7 @@ abstract class IAuthAPI {
     required String password,
   });
   Future<model.Account?> currentUserAccount();
+  FuturEitherVoid logout();
 }
 
 class AuthAPI implements IAuthAPI {
@@ -73,6 +74,22 @@ class AuthAPI implements IAuthAPI {
         password: password,
       );
       return right(session);
+    } on AppwriteException catch (e, stackTrace) {
+      return left(
+        Failure(e.message ?? "Something unexpected happened ", stackTrace),
+      );
+    } catch (e, stackTrace) {
+      return left(
+        Failure(e.toString(), stackTrace),
+      );
+    }
+  }
+
+  @override
+  FuturEitherVoid logout() async {
+    try {
+      await _account.deleteSession(sessionId: 'current');
+      return right(null);
     } on AppwriteException catch (e, stackTrace) {
       return left(
         Failure(e.message ?? "Something unexpected happened ", stackTrace),
