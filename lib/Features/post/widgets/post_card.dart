@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:like_button/like_button.dart';
 import 'package:todoapp/Features/post/controllers/post_controller.dart';
 import 'package:todoapp/Features/post/views/post_reply_view.dart';
+import 'package:todoapp/Features/user_profile/views/user_profile_view.dart';
 import 'package:todoapp/constants/assets_constant.dart';
 import 'package:todoapp/Features/auth/controller/auth_controller.dart';
 import 'package:todoapp/Features/post/widgets/carousel_image.dart';
@@ -44,9 +45,17 @@ class PostCard extends ConsumerWidget {
                         children: [
                           Container(
                             margin: const EdgeInsets.all(10),
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(user.profilePic),
-                              radius: 25,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(
+                                  context,
+                                  UserProfileView.route(user),
+                                );
+                              },
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(user.profilePic),
+                                radius: 25,
+                              ),
                             ),
                           ),
                           Expanded(
