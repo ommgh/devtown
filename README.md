@@ -33,12 +33,12 @@ Follow these steps to set up the project locally:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/IamOm775/social-media-app
+git clone https://github.com/IamOm775/devtown
 ```
 2. Navigate to the project directory:
 
 ```bash
-cd social-media-app
+cd devtown
 ```
 3. Install the project dependencies:
 ```bash
