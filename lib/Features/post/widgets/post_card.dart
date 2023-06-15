@@ -197,7 +197,7 @@ class PostCard extends ConsumerWidget {
                                               ? SvgPicture.asset(
                                                   AssetsConstants
                                                       .upvoteicon, //Replace With Upvote
-                                                  color: Pallete.redcolor,
+                                                  color: Pallete.greencolor,
                                                 )
                                               : SvgPicture.asset(
                                                   AssetsConstants
@@ -215,7 +215,7 @@ class PostCard extends ConsumerWidget {
                                               text,
                                               style: TextStyle(
                                                 color: isLiked
-                                                    ? Pallete.redcolor
+                                                    ? Pallete.greencolor
                                                     : Pallete.whiteColor,
                                                 fontSize: 16,
                                               ),
