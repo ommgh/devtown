@@ -196,7 +196,7 @@ class PostCard extends ConsumerWidget {
                                           return isLiked
                                               ? SvgPicture.asset(
                                                   AssetsConstants
-                                                      .homeFilled, //Replace With Upvote
+                                                      .upvoteicon, //Replace With Upvote
                                                   color: Pallete.redcolor,
                                                 )
                                               : SvgPicture.asset(
