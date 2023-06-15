@@ -15,4 +15,5 @@ class AssetsConstants {
   static const String commenticon = "$_svgPath/comment.svg";
   static const String likeoutlinedicon = "$_svgPath/like_outlined.svg";
   static const String verifiedbadge = "$_svgPath/verified.svg";
+  static const String upvoteicon = "$_svgPath/upvote.svg";
 }
