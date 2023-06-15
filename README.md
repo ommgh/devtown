@@ -1,4 +1,22 @@
-# Social Media App
+# Devtown
+
+## Features
+- Sign Up With Email, Password
+- Sign In With Email, Password
+- Posting Text
+- Posting Image
+- Posting Link
+- Hashtag identification & storage
+- Displaying posts
+- Liking posts
+- Commenting/Replying
+- Follow user
+- Search users
+- Display followers, following, recent tweets
+- Edit User Profile
+- Show tweets that have 1 hashtag
+- Dev Green
+- Notifications tab (replied to you, followed you, like your pic)
 
 ## Prerequisites
 
