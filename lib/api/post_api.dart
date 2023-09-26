@@ -7,7 +7,7 @@ import 'package:todoapp/core/core.dart';
 import 'package:todoapp/core/providers.dart';
 import 'package:todoapp/models/post_model.dart';
 
-import '../Constants/Constants.dart';
+import '../constants/constants.dart';
 
 final postAPIProvider = Provider((ref) {
   return PostAPI(

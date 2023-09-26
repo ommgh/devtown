@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todoapp/Features/auth/controller/auth_controller.dart';
-import 'package:todoapp/Features/auth/view/signup_view.dart';
-import 'package:todoapp/Features/home/view/home_view.dart';
+import 'package:todoapp/features/auth/controller/auth_controller.dart';
+import 'package:todoapp/features/auth/view/signup_view.dart';
+import 'package:todoapp/features/home/view/home_view.dart';
 import 'package:todoapp/common/common.dart';
 import 'package:todoapp/common/loading_page.dart';
 import 'package:todoapp/theme/theme.dart';

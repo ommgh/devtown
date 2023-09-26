@@ -2,7 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:todoapp/Constants/appwrite_dependency.dart';
+import 'package:todoapp/constants/appwrite_dependency.dart';
 import 'package:todoapp/core/core.dart';
 import 'package:todoapp/core/providers.dart';
 import 'package:todoapp/models/notification_model.dart';
