@@ -16,7 +16,7 @@
 - Search users
 - Display followers, following, recent tweets
 - Edit User Profile
-- Show tweets that have 1 hashtag
+- Show posts that have 1 hashtag
 - Dev Green
 - Notifications tab (replied to you, followed you, like your pic)
 
